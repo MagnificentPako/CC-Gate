@@ -1,0 +1,9 @@
+--@Class Steve
+--@Extends BaseUnit
+--Author H4X0RZ
+
+function Steve:new()
+	local n = new()
+
+	return n
+end

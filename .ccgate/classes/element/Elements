@@ -1,10 +1,12 @@
 --@Class Elements
 --@Extends BaseClass
+--Author H4X0RZ
 
 function Elements:new()
 	error("Nope",0)
 end
 
+Elements.NONE = -1
 Elements.FIRE = 1
 Elements.WATER = 2
 Elements.AIR = 3

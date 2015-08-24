@@ -1,5 +1,6 @@
 --@Class SkillType
 --@Extends BaseClass
+--Author H4X0RZ
 
 function SkillType:new()
 	error("Nope",0)
@@ -8,3 +9,4 @@ end
 SkillType.LEADER = 1
 SkillType.ACTIVE = 2
 SkillType.PASSIVE = 3
+SkillType.NORMAL = 4

@@ -1,3 +1,5 @@
+--Author: H4X0RZ
+
 if(not fs.exists(".oo")) then fs.makeDir(".oo") local h = http.get("http://pastebin.com/raw.php?i=zDf5pMsK") local cont = h.readAll() h.close() local h2 = fs.open(".oo/oo","w") h2.writeLine(cont) h2.close() end dofile(".oo/oo")
 
 local basepath = fs.getDir(shell.getRunningProgram())
@@ -23,3 +25,5 @@ local function recursive(path)
 end
 
 recursive(ccgate.rel("classes"))
+
+_G["XPTypes"] = XpTypes:new()

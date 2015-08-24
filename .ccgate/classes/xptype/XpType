@@ -1,0 +1,23 @@
+--@Class XpType
+--Extends BaseClass
+
+function XpType:new()
+	local n = new()
+	n.name = ""
+	n.maxLevel = 1
+	n.steps = {}
+	return n
+end
+
+function XpType:getMaxLevel()
+	return self.maxLevel
+end
+
+function XpType:getXpNeeded(lvl)
+	if(lvl>self.maxLevel) then error("level too high") end
+	return self.steps[lvl]
+end
+
+function XpType:getName()
+	return self.name
+end

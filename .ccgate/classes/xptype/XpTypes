@@ -1,0 +1,11 @@
+--@Class XpTypes
+--@Extends BaseClass
+
+function XpTypes:new()
+	local n = new()
+	local types = searchClassesExtending("XpType")
+	for k,v in pairs(types) do
+		n[v:getName()] = v
+	end
+	return n
+end

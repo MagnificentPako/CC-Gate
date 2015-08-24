@@ -1,2 +1,93 @@
 --@Class BaseUnit
 --@Extends BaseClass
+--Author H4X0RZ
+
+local id = 1
+
+function BaseUnit:new()
+	local n = new()
+	n.name = ""
+	n.race = ""
+	n.element = Elements.NONE
+	n.level = 1
+	n.damage = 1
+	n.hp = 1
+	n.leaderSkill = false
+	n.passiveSkill = false
+	n.activeSkill = false
+	n.firstSkill = false
+	n.secondSkill = false
+	n.curXP = 0
+	n.hpAddition = 0
+	n.damageAddition = 0
+	n.xpType = XPTypes.ONE
+	n.maxLevel = n.xpType:getMaxLevel()
+	n.id = id
+	id = id+1
+	return n
+end
+
+function BaseUnit:getName()
+	return self.name
+end
+
+function BaseUnit:getRace()
+	return self.race
+end
+
+function BaseUnit:getElement()
+	return self.element
+end
+
+function BaseUnit:getLevel()
+	return self.level
+end
+
+function BaseUnit:getMaxLevel()
+	return self.maxLevel
+end
+
+function BaseUnit:getDamage()
+	return self.damage
+end
+
+function BaseUnit:getHP()
+	return self.hp
+end
+
+function BaseUnit:getLeaderSkill()
+	return self.leaderSkill
+end
+
+function BaseUnit:getPassiveSkill()
+	return self.passiveSkill
+end
+
+function BaseUnit:getActiveSkill()
+	return self.activeSkill
+end
+
+function BaseUnit:getFirstSkill()
+	return self.firstSkill
+end
+
+function BaseUnit:getSecondSkill()
+	return self.secondSkill
+end
+
+function BaseUnit:addXP(xp)
+	xp = xp+self.curXP
+	local oldLevel = self.level
+	while xp > 0 do
+		if(xp >= self.xpType:getXpNeeded(self.level+1)) then
+			xp = xp-self.xpType:getXpNeeded(self.level+1)
+			self.level = self.level+1
+			self.damage = self.damage+self.damageAddition
+			self.hp = self.hp+self.hpAddition
+		else
+			self.curXP = xp
+		end
+	end
+	local newLevel = self.level
+	return newLevel - oldLevel
+end
