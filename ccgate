@@ -26,4 +26,4 @@ end
 
 recursive(ccgate.rel("classes"))
 
-_G["XPTypes"] = XpTypes:new()
+_G["XpTypes"] = XpTypes:new()

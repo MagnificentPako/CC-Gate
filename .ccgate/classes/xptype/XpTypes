@@ -5,7 +5,7 @@ function XpTypes:new()
 	local n = new()
 	local types = searchClassesExtending("XpType")
 	for k,v in pairs(types) do
-		n[v:getName()] = v
+		n[v:new():getName()] = v
 	end
 	return n
 end

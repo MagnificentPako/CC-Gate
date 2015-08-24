@@ -20,7 +20,7 @@ function BaseUnit:new()
 	n.curXP = 0
 	n.hpAddition = 0
 	n.damageAddition = 0
-	n.xpType = XPTypes.ONE
+	n.xpType = XpTypes.ONE
 	n.maxLevel = n.xpType:getMaxLevel()
 	n.id = id
 	id = id+1
@@ -90,4 +90,8 @@ function BaseUnit:addXP(xp)
 	end
 	local newLevel = self.level
 	return newLevel - oldLevel
+end
+
+function BaseUnit:getID()
+	return self.id
 end
