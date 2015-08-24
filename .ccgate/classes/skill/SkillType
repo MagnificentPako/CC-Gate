@@ -1,0 +1,10 @@
+--@Class SkillType
+--@Extends BaseClass
+
+function SkillType:new()
+	error("Nope",0)
+end
+
+SkillType.LEADER = 1
+SkillType.ACTIVE = 2
+SkillType.PASSIVE = 3

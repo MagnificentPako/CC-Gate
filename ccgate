@@ -1,0 +1,25 @@
+if(not fs.exists(".oo")) then fs.makeDir(".oo") local h = http.get("http://pastebin.com/raw.php?i=zDf5pMsK") local cont = h.readAll() h.close() local h2 = fs.open(".oo/oo","w") h2.writeLine(cont) h2.close() end dofile(".oo/oo")
+
+local basepath = fs.getDir(shell.getRunningProgram())
+local ccgate = {}
+
+function ccgate.rel(path)
+	return fs.combine(fs.combine(basepath,".ccgate"),path)
+end
+
+_G["ccgate"] = ccgate
+
+local function recursive(path)
+	local curPath = path
+	local list = fs.list(path)
+	for k,v in pairs(list) do
+		local p = fs.combine(path,v)
+		if(fs.isDir(p)) then
+			recursive(p)
+		else
+			import(p)
+		end
+	end
+end
+
+recursive(ccgate.rel("classes"))

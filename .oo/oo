@@ -1,0 +1,86 @@
+local function createClass(inherit)
+	return setmetatable({},{__index=inherit})
+end
+
+local _type = _G.rawtype or type
+
+_G["rawtype"] = _type
+
+_G["type"] = function(obj)
+	local type_ = rawtype(obj)
+	if(type_ == "table") then
+		if(obj._CLASS_NAME_) then
+			return obj._CLASS_NAME_,true
+		end
+	end
+	return type_
+end
+
+function _G.extendsFrom(from,to)
+	local last = ""
+	local cur = from
+	if(cur.super) then
+		while last ~= "BaseClass" do
+			last = cur._CLASS_NAME_
+			if(last == to) then
+				return true
+			end
+			cur = cur.super 
+		end
+	end
+	return false
+end
+
+function _G.searchClassesExtending(from)
+	local classes = {}
+	for k,v in pairs(_G) do
+	local t,isClass = type(v)
+		if(isClass) then
+			if(extendsFrom(v,from) and t~=from) then
+				table.insert(classes,v)
+			end
+		end
+	end
+	return classes
+end
+
+function import(file)
+	local handle = fs.open(file,"r")
+	local cont = handle.readAll()
+	handle.close()
+	name,super = cont:match("--@Class ([^\t\n]+)"),cont:match("--@Extends ([^\t\n]+)")
+	local env = {}
+	env[name] = createClass(_G[super])
+	env["super"] = _G[super] or _G["BaseClass"]
+
+	local n = [[local new = function() 
+	return setmetatable(super:new(),{
+		__index=]]..name..[[
+		}) end
+]]
+
+	cont = n..cont
+	env = setmetatable(env,{__index=_G})
+	local f,err = loadstring(cont)
+	if(err) then error(err,2) end
+	setfenv(f,env)
+	f()
+
+	_G[name] = setmetatable(env[name],{__index=_G[super]})
+	_G[name].super = _G[super]
+	_G[name]._CLASS_NAME_ = name
+
+
+end
+
+local del = {}
+for k,v in pairs(_G) do
+	local _,y = type(v)
+	if(y) then del[k] = true end
+end
+
+for k,v in pairs(del) do
+	_G[k] = nil
+end
+
+_G["BaseClass"] = createClass{_OO_VERSION_ = 1,_CLASS_NAME_="BaseClass",new = function(self) return setmetatable({},_G["BaseClass"]) end}
